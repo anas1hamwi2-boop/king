@@ -2,7 +2,7 @@ import os
 import requests
 from flask import Flask, request, jsonify, render_template_string
 
-API_TARGET = os.environ.get('API_TARGET', 'http://93.115.101.182:9393')
+API_TARGET = os.environ.get('API_TARGET', 'http://78.154.103.41:9393')
 API_KEY = os.environ.get('API_KEY', 'hanenbano')
 HOST = '0.0.0.0'
 PORT = int(os.environ.get('PORT', 5000))
