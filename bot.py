@@ -6,29 +6,26 @@ from threading import Thread
 import telebot
 from telebot import types
 from flask import Flask, abort, render_template_string
-import psycopg2
-from psycopg2 import sql
-import psycopg2.extras
+import psycopg
 
 # ------------------ الإعدادات الأساسية ------------------
-TOKEN = "7923040242:AAHH55scaoC1Z9MkRmAV3nph7m8SN8mJCUU"
+TOKEN = "7797694901:AAGantKPh9j8TvkyC-fb0o5gWmNdVD_K3rg"
 ADMIN_ID = "5087712149"
-BOT_URL_BASE = "https://kingo999.onrender.com"  # تأكد من صحة الرابط
+BOT_URL_BASE = "https://kingo999.onrender.com"
 
-# رابط PostgreSQL المباشر (يمكنك وضعه مباشرة أو عبر متغير بيئة)
-# الأفضل استخدام متغير بيئة: DATABASE_URL = os.environ.get("DATABASE_URL")
-DATABASE_URL = "postgresql://q_d_bynt_user:LX1QF66ipeKcEnQLiYFkc2cUR2cnBBFw@dpg-db7mj1a5b2lc738gb5d0-a/q_d_bynt"
+# يفضل وضع الرابط في متغير بيئة على Render باسم DATABASE_URL
+DATABASE_URL = os.environ.get("DATABASE_URL", "postgresql://q_d_bynt_user:LX1QF66ipeKcEnQLiYFkc2cUR2cnBBFw@dpg-db7mj1a5b2lc738gb5d0-a/q_d_bynt")
 
 bot = telebot.TeleBot(TOKEN)
 app = Flask(__name__)
 
 # ------------------ دوال قاعدة البيانات ------------------
 def get_db():
-    """إنشاء اتصال بقاعدة البيانات مع إعادة المحاولة"""
+    """إنشاء اتصال بقاعدة البيانات باستخدام psycopg 3"""
     retries = 3
     for i in range(retries):
         try:
-            conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+            conn = psycopg.connect(DATABASE_URL)
             return conn
         except Exception as e:
             print(f"⚠️ محاولة اتصال {i+1} فشلت: {e}")
@@ -189,10 +186,10 @@ def save_file_with_name(msg, html_content, original_name):
     if not custom_name:
         custom_name = original_name
 
-    file_id = str(uuid.uuid4())[:1]
+    file_id = str(uuid.uuid4())[:8]
     save_file_to_db(file_id, custom_name, html_content, original_name)
 
-    file_url = f"{BOT_URL_BASE}/{file_id}/"
+    file_url = f"{BOT_URL_BASE}/f/{file_id}"
     bot.send_message(
         uid,
         f"✅ **تم رفع الملف بنجاح!**\n\n"
@@ -241,7 +238,7 @@ def file_control(call, file_id):
         return
 
     name, content, active = file_data
-    file_url = f"{BOT_URL_BASE}/{file_id}/"
+    file_url = f"{BOT_URL_BASE}/f/{file_id}"
     status_text = "✅ **نشط**" if active else "❌ **متوقف**"
 
     keyboard = types.InlineKeyboardMarkup(row_width=2)
@@ -340,5 +337,5 @@ def run_flask():
 
 if __name__ == "__main__":
     Thread(target=run_bot).start()
-    print("✅ البوت والخادم يعملان مع PostgreSQL مباشرة")
+    print("✅ البوت والخادم يعملان مع psycopg 3")
     run_flask()
