@@ -17,7 +17,7 @@ BOT_URL_BASE = "https://kingo999.onrender.com"  # تأكد من صحة الرا�
 
 # رابط PostgreSQL المباشر (يمكنك وضعه مباشرة أو عبر متغير بيئة)
 # الأفضل استخدام متغير بيئة: DATABASE_URL = os.environ.get("DATABASE_URL")
-DATABASE_URL = "postgresql://king_6bx4_user:RhAgl1RanixDRSOtsp9VxiKlRaJrugYh@dpg-d67hvp7gi27c739t43b0-a/king_6bx4"
+DATABASE_URL = "postgresql://q_d_bynt_user:LX1QF66ipeKcEnQLiYFkc2cUR2cnBBFw@dpg-db7mj1a5b2lc738gb5d0-a/q_d_bynt"
 
 bot = telebot.TeleBot(TOKEN)
 app = Flask(__name__)
