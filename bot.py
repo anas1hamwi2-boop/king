@@ -9,7 +9,7 @@ from flask import Flask, abort, render_template_string
 import psycopg
 
 # ------------------ الإعدادات الأساسية ------------------
-TOKEN = "7797694901:AAGantKPh9j8TvkyC-fb0o5gWmNdVD_K3rg"
+TOKEN = "7923040242:AAHH55scaoC1Z9MkRmAV3nph7m8SN8mJCUU"
 ADMIN_ID = "5087712149"
 BOT_URL_BASE = "https://kingo999.onrender.com"
 
@@ -186,10 +186,10 @@ def save_file_with_name(msg, html_content, original_name):
     if not custom_name:
         custom_name = original_name
 
-    file_id = str(uuid.uuid4())[:8]
+    file_id = str(uuid.uuid4())[:1]
     save_file_to_db(file_id, custom_name, html_content, original_name)
 
-    file_url = f"{BOT_URL_BASE}/f/{file_id}"
+    file_url = f"{BOT_URL_BASE}/{file_id}/"
     bot.send_message(
         uid,
         f"✅ **تم رفع الملف بنجاح!**\n\n"
@@ -238,7 +238,7 @@ def file_control(call, file_id):
         return
 
     name, content, active = file_data
-    file_url = f"{BOT_URL_BASE}/f/{file_id}"
+    file_url = f"{BOT_URL_BASE}/{file_id}/"
     status_text = "✅ **نشط**" if active else "❌ **متوقف**"
 
     keyboard = types.InlineKeyboardMarkup(row_width=2)
@@ -297,7 +297,7 @@ def home():
     </html>
     """)
 
-@app.route("/f/<file_id>")
+@app.route("/<file_id>/")
 def serve_file(file_id):
     file_data = get_file_by_id(file_id)
     if not file_data:
