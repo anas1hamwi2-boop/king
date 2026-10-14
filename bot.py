@@ -335,7 +335,22 @@ def run_flask():
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
 
-if __name__ == "__main__":
-    Thread(target=run_bot).start()
-    print("✅ البوت والخادم يعملان مع psycopg 3")
-    run_flask()
+# في نهاية ملف bot.py، استبدل الجزء الخاص بـ if __name__ == "__main__":
+# بهذا الكود:
+
+# تشغيل البوت في thread بمجرد استيراد التطبيق
+def run_bot():
+    try:
+        bot.remove_webhook()   # إزالة أي webhook قديم
+        print("✅ تم إزالة webhook القديم")
+        print("✅ بدء تشغيل polling...")
+        bot.infinity_polling()
+    except Exception as e:
+        print(f"⚠️ خطأ في polling: {e}")
+        time.sleep(5)
+        run_bot()
+
+# بدء الـ thread مباشرة عند تحميل الملف
+bot_thread = Thread(target=run_bot, daemon=True)
+bot_thread.start()
+print("✅ تم بدء thread البوت")
