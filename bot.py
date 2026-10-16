@@ -9,7 +9,7 @@ from flask import Flask, abort, render_template_string
 import psycopg
 
 # ------------------ الإعدادات الأساسية ------------------
-TOKEN = "7923040242:AAHH55scaoC1Z9MkRmAV3nph7m8SN8mJCUU"
+TOKEN = "7923040242:AAHsMgSvKpkHo_i_GfJj85nLfm6IGZtyChc"
 ADMIN_ID = "5087712149"
 BOT_URL_BASE = "https://kingo999.onrender.com"
 
