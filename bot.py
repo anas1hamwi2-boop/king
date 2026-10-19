@@ -9,14 +9,14 @@ from flask import Flask, abort, render_template_string
 import psycopg
 
 # ------------------ الإعدادات الأساسية ------------------
-TOKEN = "7923040242:AAHsMgSvKpkHo_i_GfJj85nLfm6IGZtyChc"
+kk = "7923040242:AAEk6tX4D1s8j-TkgRpJqGOvUnVFeWXYL6Y"
 ADMIN_ID = "5087712149"
 BOT_URL_BASE = "https://kingo999.onrender.com"
 
 # يفضل وضع الرابط في متغير بيئة على Render باسم DATABASE_URL
 DATABASE_URL = os.environ.get("DATABASE_URL", "postgresql://q_d_bynt_user:LX1QF66ipeKcEnQLiYFkc2cUR2cnBBFw@dpg-db7mj1a5b2lc738gb5d0-a/q_d_bynt")
 
-bot = telebot.TeleBot(TOKEN)
+bot = telebot.TeleBot(kk)
 app = Flask(__name__)
 
 # ------------------ دوال قاعدة البيانات ------------------
